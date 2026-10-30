@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- satu garis margin yang terpotong menjadi tiga paragraf -->
+  <g fill="#d9456f">
+    <rect x="12" y="0" width="8" height="13" rx="4"/>
+    <rect x="12" y="15" width="8" height="9" rx="4"/>
+    <rect x="12" y="26" width="8" height="6" rx="3"/>
+  </g>
+</svg>

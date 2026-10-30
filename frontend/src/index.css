@@ -1,0 +1,137 @@
+@import 'tailwindcss';
+
+
+:root {
+  color-scheme: light dark;
+  --paper: #f4f5fa;
+  --panel: #e9ebf5;
+  --ink: #181b2e;
+  --soft: #565b73;
+  --line: #d3d7e8;
+  --pen: #2437b8;
+  --margin: #d9456f;
+  --danger: #b3203f;
+  --on-danger: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #12131c;
+    --panel: #1b1d2a;
+    --ink: #e8e9f4;
+    --soft: #9fa2b9;
+    --line: #2c2f42;
+    --pen: #8e9bff;
+    --margin: #ff7a9c;
+    --danger: #ff8a9f;
+    --on-danger: #2a0a13;
+  }
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-panel: var(--panel);
+  --color-ink: var(--ink);
+  --color-soft: var(--soft);
+  --color-line: var(--line);
+  --color-pen: var(--pen);
+  --color-margin: var(--margin);
+  --color-danger: var(--danger);
+  --color-on-danger: var(--on-danger);
+  --font-sans: 'Atkinson Hyperlegible Next Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Literata Variable', Georgia, 'Times New Roman', serif;
+}
+
+@layer base {
+  html {
+    background: var(--paper);
+  }
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  :focus-visible {
+    outline: 2px solid var(--pen);
+    outline-offset: 3px;
+    border-radius: 0.25rem;
+  }
+  main:focus {
+    outline: none;
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--margin) 30%, transparent);
+  }
+  dialog::backdrop {
+    background: color-mix(in srgb, var(--ink) 45%, transparent);
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-4 font-medium whitespace-nowrap transition-colors;
+    @apply disabled:cursor-not-allowed disabled:opacity-60;
+  }
+  .btn-primary {
+    @apply bg-pen text-paper hover:bg-pen/85;
+  }
+  .btn-quiet {
+    @apply text-ink hover:bg-panel;
+  }
+  .btn-danger {
+    @apply bg-danger text-on-danger hover:bg-danger/85;
+  }
+  .btn-danger-quiet {
+    @apply text-danger hover:bg-panel;
+  }
+
+  .field {
+    @apply w-full rounded-lg border border-line bg-paper px-3 text-ink placeholder:text-soft;
+    @apply focus-visible:border-pen focus-visible:outline-offset-0;
+  }
+  .field[aria-invalid='true'] {
+    @apply border-danger;
+  }
+
+  /* Satu ruas garis margin = satu paragraf. */
+  .spine-seg {
+    @apply w-1 justify-self-center rounded-full bg-margin;
+    transform-origin: top;
+    animation: spine-draw 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(min(var(--i, 0), 9) * 80ms);
+  }
+}
+
+@keyframes spine-draw {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.toast {
+  animation: toast-in 180ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spine-seg,
+  .toast {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
